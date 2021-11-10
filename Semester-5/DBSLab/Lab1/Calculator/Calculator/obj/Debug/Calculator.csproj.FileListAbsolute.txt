@@ -1,0 +1,19 @@
+D:\190911332-Prajwal\Calculator\Calculator\bin\Debug\Calculator.exe.config
+D:\190911332-Prajwal\Calculator\Calculator\bin\Debug\Calculator.exe
+D:\190911332-Prajwal\Calculator\Calculator\bin\Debug\Calculator.pdb
+D:\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.csprojResolveAssemblyReference.cache
+D:\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.Form1.resources
+D:\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.Properties.Resources.resources
+D:\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.csproj.GenerateResource.Cache
+D:\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.exe
+D:\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.pdb
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\bin\Debug\Calculator.exe.config
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\bin\Debug\Calculator.exe
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\bin\Debug\Calculator.pdb
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.csproj.AssemblyReference.cache
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.Form1.resources
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.Properties.Resources.resources
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.csproj.GenerateResource.cache
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.csproj.CoreCompileInputs.cache
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.exe
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\Calculator\Calculator\obj\Debug\Calculator.pdb
