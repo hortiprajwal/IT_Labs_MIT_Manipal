@@ -1,0 +1,11 @@
+D:\190911332-Prajwal\StudentDetails\StudentDetails\bin\Debug\StudentDetails.exe.config
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\bin\Debug\StudentDetails.exe.config
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\bin\Debug\StudentDetails.exe
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\bin\Debug\StudentDetails.pdb
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\obj\Debug\StudentDetails.csproj.AssemblyReference.cache
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\obj\Debug\StudentDetails.Form1.resources
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\obj\Debug\StudentDetails.Properties.Resources.resources
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\obj\Debug\StudentDetails.csproj.GenerateResource.cache
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\obj\Debug\StudentDetails.csproj.CoreCompileInputs.cache
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\obj\Debug\StudentDetails.exe
+C:\Users\Prajwal\Desktop\Information Technology\Semester-V\DBMS\DBSLab\190911332-Prajwal\StudentDetails\StudentDetails\obj\Debug\StudentDetails.pdb
