@@ -1,0 +1,146 @@
+select * from user_tables;
+
+select table_name;
+
+i. Create the above tables by properly specifying the primary keys and the foreign
+keys.
+
+create table PERSON (
+	driver_id varchar(30), 
+	name varchar(50), 
+	Address varchar(100),
+	primary key (driver_id) );
+
+create table CAR (
+	regno varchar(20), 
+	model varchar(30), 
+	Year int,
+	primary key (regno) );
+
+create table ACCIDENT (
+	report_number int, 
+	accd_date date, 
+	location varchar(50),
+	primary key (report_number) );
+
+create table OWNS (
+	driver_id varchar(30), 
+	regno varchar(20),
+	foreign key (driver_id) references PERSON,
+	foreign key (regno) references CAR );
+
+create table PARTICIPATED (
+	driver_id varchar(30), 
+	regno varchar(20), 
+	report_number int, 
+	damage_amount int,
+	foreign key (driver_id) references PERSON,
+	foreign key (regno) references CAR,
+	foreign key (report_number) references ACCIDENT );
+
+ii. Enter at least five tuples for each relation
+
+//PERSON
+insert into PERSON values('1','Pandu','Manipal');
+insert into PERSON values('2','Ramu','Mumbai');
+insert into PERSON values('3','Lucky','Pune');
+insert into PERSON values('4','Happy','Manipal');
+insert into PERSON values('5','Gopal','Bangalore');
+insert into PERSON values('6','Laxman','Bangalore');
+
+//CAR
+insert into CAR values('100','BMW','2018');//2008
+insert into CAR values('101-112','Mercedes','2020');
+insert into CAR values('102','Redbull','2019');12 tesla 2008
+insert into CAR values('103','Aston Martin','2021');
+insert into CAR values('104','Tesla','2017');
+insert into CAR values('105','Rolls-Royce','2018');
+
+//ACCIDENT
+insert into Accident values(1001,to_date('22-11-2019','dd-mm-yyyy'),'Manipal');
+insert into Accident values(1002,to_date('10-03-2020','dd-mm-yyyy'),'Mumbai');
+insert into Accident values(1003,to_date('10-05-2019','dd-mm-yyyy'),'Pune');
+insert into Accident values(1004,to_date('10-06-2021','dd-mm-yyyy'),'Manipal');
+insert into Accident values(1005,to_date('15-08-2019','dd-mm-yyyy'),'Bangalore');
+insert into Accident values(1006,to_date('21-07-2019','dd-mm-yyyy'),'Bangalore');
+insert into Accident values(1006,to_date('19-05-2019','dd-mm-yyyy'),'Mangalore');
+
+
+//OWNS
+insert into OWNS values('1','100');
+insert into OWNS values('2','101');
+insert into OWNS values('3','102');
+insert into OWNS values('4','103');
+insert into OWNS values('5','104');
+insert into OWNS values('6','105');
+
+//PARTICIPATED 
+insert into PARTICIPATED values('1','100',1001,10000);
+insert into PARTICIPATED values('2','101',1002,15000);
+insert into PARTICIPATED values('3','102',1003,8000);/12
+insert into PARTICIPATED values('4','103',1004,5000);
+insert into PARTICIPATED values('5','104',1005,18000);
+insert into PARTICIPATED values('6','105',1006,50000);
+
+iii. Update the damage amount to 25000 for the car with a specific reg. no in a
+PARTICIPATED table with report number 12.
+
+update PARTICIPATED 
+set damage_amount=25000
+where driver_id='3'; //used report_number=3 instead of 12 as there was no such tuple.
+
+
+iv. Delete the accident and related information that took place in a specific year. 
+(Hint: Command to extract year component from the date attribute is,
+extract (year from accd_date) )
+
+delete from ACCIDENT 
+where extract(year from accd_date)=2021 
+and report_number=1006;
+
+v. Alter table to add and delete an attribute
+
+alter table car 
+add colour varchar(50);
+
+alter table car
+drop column colour;
+
+
+vi. Alter table to add Check constraint.
+
+alter table ACCIDENT 
+add check (report_number>=1000);//check constraint for report_number>=1000
+
+ALTER TABLE Persons
+ADD CONSTRAINT CHK_PersonAge CHECK (Age>=18 AND City='Sandnes');//for multiple columns
+
+Lab-4
+1. Find the total number of people who owned cars that were involved in accidents in
+2008.
+
+select count(distinct driver_id) from participated 
+natural join accident where extract (year from accd_date) = '2018';
+
+2. Find the number of accidents in which cars belonging to a specific model were
+involved.
+
+select count(report_number) from accident NATURAL JOIN participated 
+NATURAL JOIN CAR where car.model = 'Tesla';
+
+
+3. Produce a listing with header as OWNER_NAME, No. of Accidents, and Total
+Damage Amount in a descending order on total damage.
+
+select PERSON.name as Owner_Name, count(report_number) as No_of_Accidents, sum(damage_amount) as Total_Amount 
+from PERSON NATURAL JOIN PARTICIPATED group by PERSON.name;
+
+4. List the Owners who made more than 2 accidents in a year.
+
+select driver_id from PARTICIPATED 
+NATURAL JOIN ACCIDENT where extract(year from accd_date) = '2019' 
+having count(report_number)>1 group by driver_id;
+
+5. List the owners who are not involved in any accident.
+
+(select name from PERSON) minus (select name from PERSON natural join PARTICIPATED);
