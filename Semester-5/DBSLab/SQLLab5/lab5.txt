@@ -1,0 +1,156 @@
+i)Create the above tables by properly specifying the primary keys
+and the foreign keys.
+CREATE TABLE STUDENT (
+regno varchar(20), 
+name varchar(50), 
+major varchar(20), 
+bdate date, 
+PRIMARY KEY(regno));
+
+CREATE TABLE COURSE (
+course# int, 
+cname varchar(30), 
+dept varchar(30), 
+PRIMARY KEY(course#));
+
+CREATE TABLE ENROLL(
+regno varchar(20), 
+course# int, 
+PRIMARY KEY(regno,course#), 
+FOREIGN KEY(regno) references STUDENT(regno) on delete cascade, 
+FOREIGN KEY(course#) references COURSE(course#) on delete cascade);
+
+CREATE TABLE TEXT (
+book_isbn int,
+booktitle varchar(50),
+publisher varchar(50), 
+author varchar(50), 
+PRIMARY KEY(book_isbn));
+
+CREATE TABLE BOOK_ADOPTION (
+course# int, 
+sem int, 
+book_isbn int, 
+PRIMARY KEY(course#, book_isbn), 
+FOREIGN KEY(course#) references COURSE(course#) on delete cascade,
+FOREIGN KEY(book_isbn) references TEXT(book_isbn) on delete cascade);
+
+ii. Enter at least five tuples for each relation.
+INSERT into STUDENT values ('1A','Ram','B.tech', to_date('19-08-1999','dd-mm-yyyy'));
+INSERT into STUDENT values ('2B','Ankur','B.tech', to_date('26-01-2000','dd-mm-yyyy'));
+INSERT into STUDENT values ('3C','Abhishek','B.Arch', to_date('15-07-2000','dd-mm-yyyy'));
+INSERT into STUDENT values ('4D','John','B.Com', to_date('12-09-2000','dd-mm-yyyy'));
+INSERT into STUDENT values ('5E','Nitin','B.Des', to_date('03-03-2001','dd-mm-yyyy'));
+INSERT into STUDENT values ('6F','Steve','B.tech', to_date('23-04-2012','dd-mm-yyyy'));
+
+INSERT into COURSE values (111,'CCE','ICT');
+INSERT into COURSE values (112,'AI ML','CSE');
+INSERT into COURSE values (113,'Information tech.','ICT');
+INSERT into COURSE values (221,'MSAP','Arch');
+INSERT into COURSE values (331,'Fashion Design','Design');
+INSERT into COURSE values (332,'Interior Design','Design');
+INSERT into COURSE values (441,'IPM','Commerce');
+
+INSERT into ENROLL values ('1A',111);
+INSERT into ENROLL values ('2B',112);
+INSERT into ENROLL values ('3C',221);
+INSERT into ENROLL values ('4D',331);
+INSERT into ENROLL values ('5E',332);
+INSERT into ENROLL values ('1A',332);
+INSERT into ENROLL values ('5E',331);
+INSERT into ENROLL values ('4D',441);
+
+INSERT into TEXT values (3421,'ABC','XYZ','AAA');
+INSERT into TEXT values (7834,'GMH','BCD','BBB');
+INSERT into TEXT values (8934,'KLM','XYZ','CCC');
+INSERT into TEXT values (4378,'DFC','JHJ','AAA');
+INSERT into TEXT values (2453,'RKH','VCT','DDD');
+INSERT into TEXT values (7344,'FCB','BCD','EEE');
+
+INSERT into BOOK_ADOPTION values (111, 1, 3421);
+INSERT into BOOK_ADOPTION values (111, 3, 7834);
+INSERT into BOOK_ADOPTION values (113, 4, 8934);
+INSERT into BOOK_ADOPTION values (221, 2, 4378);
+INSERT into BOOK_ADOPTION values (331, 5, 2453);
+INSERT into BOOK_ADOPTION values (332, 8, 7834);
+INSERT into BOOK_ADOPTION values (332, 6, 7344);
+
+a)List the courses which uses more than 1 text book.
+select distinct course# ,cname, dept
+from course
+where course# in (select course# from book_adoption
+group by course#
+having count(course#)>1);
+
+b)List the departments whose all course text books are
+published by a particular publisher.
+
+select distinct dept
+from course 
+where course# in (select course# from book_adoption
+where book_isbn in (select book_isbn from text
+where publisher='BCD'));
+
+c)Find the students who have enrolled for course of more 
+than one department
+
+select name from student 
+where regno in (select regno from enroll
+where course# in (select course# from course 
+where dept in (select distinct dept from course
+group by dept
+having count(dept)>1)));
+
+d)Produce a list of students who are not enrolled.
+
+select regno,name from student
+where regno not in (select regno from enroll);
+
+e)List the books which are adopted by the course as well as
+enrolled by the student.
+select booktitle from text 
+where book_isbn in(select book_isbn from Book_Adoption
+where course# in (select course# from enroll));
+
+f)List the courses which has adapted at least two books from a
+specific publisher.
+
+select course#, cname
+from course 
+where course# in (select course#
+from book_adoption natural join text
+where publisher = 'BCD'
+group by course#
+having count(book_isbn)>1);
+
+g)Identify the students who are enrolled for maximum number of
+books.
+select name from student where regno in
+(select regno from enroll where course# in
+(select course# from book_adoption
+group by course#
+having count(book_isbn)= (select max(mycount) from
+(select count(book_isbn) mycount from book_adoption
+group by course#))));
+
+h)List the publishers along with the number of books published by
+them.
+select publisher , book_count
+from (select publisher, count(book_isbn) as book_count
+from text 
+group by publisher);
+
+i)List the students who are enrolled to all their courses which 
+adopts books.
+(note: some of the courses need not adopt books)
+
+select name from student where regno in
+(select regno from enroll where course# in
+(select course# from book_adoption));
+
+j)Implement previous question i. using views.
+
+create view student_books as
+select name from student where regno in
+(select regno from enroll where course# in
+(select course# from book_adoption));
