@@ -1,0 +1,120 @@
+create table actor(
+	act_id int,
+	act_name varchar(20),
+	act_gender varchar(20),
+	primary key(act_id)
+);
+
+create table director(
+	dir_id int,
+	dir_name varchar(20),
+	dir_phone int,
+	primary key(dir_id)
+);
+
+create table movies(
+	mov_id int,
+	mov_title varchar(20),
+	mov_year int,
+	mov_lang varchar(20),
+	dir_id,
+	primary key(mov_id),
+	foreign key(dir_id) references director
+);
+
+create table cast(
+	act_id int,
+	mov_id int,
+	role varchar(20),
+	foreign key(act_id) references actor,
+	foreign key(mov_id) references movies
+);
+
+create table rating(
+	mov_id int,
+	rev_stars int,
+	foreign key(mov_id) references movies
+);
+
+
+insert into actor values(301,'ANUSHKA','F');
+insert into actor values(302,'PRABHAS','M');
+insert into actor values(303,'PUNITH','M');
+insert into actor values(304,'JERMY','M');
+
+insert into director values(60,'RAJAMOULI',8751611001);
+insert into director values(61,'HITCHCOCK',7766138911);
+insert into director values(62,'FARAN',9986776531);
+insert into director values(63,'STEVEN SPEILBERG',8989776530);
+
+insert into movies values(1001,'BAHUBALI-2',2017,'TELAGU',60);
+insert into movies values(1002,'BAHUBALI-1',2015,'TELAGU',60);
+insert into movies values(1003,'AKASH',2008,'KANNADA',61);
+insert into movies values(1004,'WAR HORSE',2011,'ENGLISH',63);
+
+insert into cast values(301,1002,'HEROINE');
+insert into cast values(301,1001,'HEROINE');
+insert into cast values(303,1003,'HERO');
+insert into cast values(303,1002,'GUEST');
+insert into cast values(304,1004,'HERO');
+
+insert into rating values(1001,4);
+insert into rating values(1002,2);
+insert into rating values(1003,5);
+insert into rating values(1004,4);
+
+3.
+select mov_title from movies 
+where dir_id not in(select dir_id from director
+where dir_name = 'FARAN');
+
+4.
+select mov_title from movies 
+where mov_id in(select mov_id from cast
+group by mov_id 
+having count(mov_id)=2 and count(act_id)>0);
+
+5.
+select act_id,act_name,act_gender from actor
+where act_id not in(select act_id from cast);
+
+6.
+set serveroutput on;
+
+create or replace procedure category(cat in varchar)
+As
+mov_cat varchar(20);
+BEGIN
+select 
+create or replace procedure updateBill (billr_hike IN integer)
+AS
+	if(rev_stars = 5) then 
+		insert into category(mov_id,mov_title,rev_stars,'Outstanding');
+	else if(rev_stars = 4) then 
+		insert into category(mov_id,mov_title,rev_stars,'Average');
+END;
+/
+
+
+6.
+set serveroutput on 
+
+DECLARE
+cursor c1 is select movies.mov_id, mov_title, rev_stars
+from movies, rating where movies.mov_id = rating.mov_id;
+cr c1%rowtype;
+BEGIN
+OPEN c1;
+LOOP
+FETCH c1 into cr;
+EXIT WHEN c1%NOTFOUND;
+if cr.rev_stars = 5 then
+dbms_output.put_line(cr.mov_id || ' ' || cr.mov_title || ' ' || cr.rev_stars || ' Outstanding');
+elsif cr.rev_stars = 4 then
+dbms_output.put_line(cr.mov_id || ' ' || cr.mov_title || ' ' || cr.rev_stars || ' Average');
+else
+dbms_output.put_line(cr.mov_id || ' ' || cr.mov_title || ' ' || cr.rev_stars || ' not popular');
+end if;
+END LOOP;
+END;
+/
