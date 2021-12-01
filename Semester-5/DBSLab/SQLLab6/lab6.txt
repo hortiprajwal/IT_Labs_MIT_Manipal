@@ -1,0 +1,108 @@
+1)Generate a trigger displaying driver information, on participating in an accident
+CREATE OR REPLACE TRIGGER trig1
+AFTER INSERT on Participated
+For EACH ROW
+BEGIN
+dbms_output.put_line('DRIVER_ID#: ' || :new.driver_id#);
+dbms_output.put_line('REGNO: ' || :new.regno);
+END;
+/
+
+2)Create a function to return total number of accidents happened in a particular
+year.
+create or replace function total_acc(yr number)
+return number is 
+acc_count number;
+begin
+select count(*) into acc_count
+from accident
+where extract(year from accd_date) = yr;
+return acc_count;
+end;
+/
+select total_acc(2020) from dual;
+
+3)Create a procedure to display total damage caused due to an accident for a
+particular driver on a specific year.
+
+create or replace procedure total_damage(yr number, driver varchar)
+is total number;
+begin
+select sum(damage_amt) into total
+from participated natural join accident
+where extract(year from accd_date) = yr AND driver_id# = driver;
+dbms_output.put_line(total);
+END;
+/
+exec total_damage(2020, '1A');
+
+4)Create a procedure to display accident information which took place in a
+particular location.
+Create or replace procedure accd_info(l varchar) is
+Info accident%ROWTYPE;
+Cursor c is select * from ACCIDENT
+Where location = l;
+Begin
+Open c;
+Loop 
+Fetch c into info;
+Exit when c%NOTFOUND;
+Dbms_output.put_line(info.report_number || ' ' || info.accd_date || ' ' ||info.location);
+End loop;
+Close c;
+End;
+/
+
+5)Write a procedure which inserts customer information into a table T1, whose 
+total order amount exceeds 10,000 INR.
+create table T1(cid varchar(10), 
+cname varchar (30),
+city varchar(30),
+amt int,
+primary key (cid));
+create or replace procedure ins_info(id t1.cid%TYPE,
+name t1.cname%TYPE,
+loc t1.city%TYPE,
+amt number) is
+begin
+if(amt>10000) then
+insert into T1(cid,cname, city) values (id, name, loc);
+commit;
+end if;
+end;
+/
+
+exec ins_info('1A' , 'RAKSHIT', 'JAIPUR',11000);
+exec ins_info('2B' , 'RAHUL', 'DELHI',1000);
+
+6)Create a procedure to store accident details into a different table based on 
+accident location information. Make use of Cursor concept.
+create table t4(
+          reportno integer,
+          accddate date,
+          location varchar(10));
+
+create table t3(
+          reportno integer,
+          accddate date,
+          location varchar(10));
+
+ create or replace procedure test5
+ 	as
+ 	CURSOR details is
+ 	     select * from accident;
+
+ 	acc_rec details%rowtype;
+ 	BEGIN
+ 	OPEN details;
+ 	LOOP
+ 	FETCH details into acc_rec;
+ 	EXIT WHEN details%NOTFOUND;
+ 	  if(acc_rec.location in ('punjab','bombay','delhi')) THEN
+ 	       insert into t4 values(acc_rec.reportno,acc_rec.acc_date,acc_rec.location);
+ 	  else
+ 	       insert into t3 values(acc_rec.reportno,acc_rec.acc_date,acc_rec.location);
+ 	   END IF;
+ 	   END LOOP;
+ 	END;
+ 	/
