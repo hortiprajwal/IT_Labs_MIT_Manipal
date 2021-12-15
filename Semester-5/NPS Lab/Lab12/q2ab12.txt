@@ -1,0 +1,46 @@
+
+Switch>
+Switch>enable
+Switch#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#int range fa 0/1-24
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport voice vlan 1
+Switch(config-if-range)#
+
+Router>enable
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#host ephone
+ephone(config)#int fa0/0
+ephone(config-if)#ip add 10.0.0.1 255.0.0.0
+ephone(config-if)#no shut
+
+ephone(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+
+ephone(config-if)#exit
+ephone(config)#ip dhcp pool ephone
+ephone(dhcp-config)#network 10.10.0.0 255.0.0.0
+ephone(dhcp-config)#option 150 ip 10.0.0.1
+ephone(dhcp-config)#default 10.0.0.1
+ephone(dhcp-config)#ex
+ephone(config)#telephony-service
+ephone(config-telephony)#max-ephone 5
+ephone(config-telephony)#max-dn 5
+ephone(config-telephony)#ip source-address
+% Incomplete command.
+ephone(config-telephony)#ip source-address 10.0.0.1 port 2000
+ephone(config-telephony)#auto assign 4 to 6
+ephone(config-telephony)#auto assign 1 to 
+% Incomplete command.
+ephone(config-telephony)#auto assign 1 to 5
+ephone(config-telephony)#ex
+ephone(config)#ephone-dn 1
+ephone(config-ephone-dn)#%LINK-3-UPDOWN: Interface ephone_dsp DN 1.1, changed state to up
+ephone-dn 1
+ephone(config-ephone-dn)#ephone-dn 1
+ephone(config-ephone-dn)#number 0001
+ephone(config-ephone-dn)#ephone-dn 2
